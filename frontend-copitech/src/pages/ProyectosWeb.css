@@ -1,0 +1,444 @@
+.web-projects {
+  padding-bottom: 48px;
+}
+
+.web-projects__notice {
+  margin-bottom: 14px;
+  padding: 11px 14px;
+  border: 1px solid #d5e9dd;
+  border-radius: 9px;
+  background: #f1faf4;
+  color: #38764e;
+  font-size: 11px;
+}
+
+.web-projects__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 18px;
+  padding: 18px;
+  border: 1px solid #e8ecf3;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.web-projects__form h2,
+.web-project-card__tasks h3 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: #29354b;
+  font-size: 13px;
+}
+
+.web-projects__form h2,
+.web-projects__form > p {
+  grid-column: 1 / -1;
+}
+
+.web-projects__form > p {
+  margin: 0;
+  color: #778297;
+  font-size: 11px;
+}
+
+.web-projects__form > p a {
+  color: #4965e3;
+}
+
+.web-projects__form label {
+  display: grid;
+  gap: 6px;
+  color: #68748a;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.web-projects__form input,
+.web-projects__form select,
+.web-projects__form textarea {
+  width: 100%;
+  min-height: 38px;
+  padding: 9px 10px;
+  border: 1px solid #e1e6ef;
+  border-radius: 8px;
+  background: #fff;
+  color: #303b52;
+  font: inherit;
+  font-size: 11px;
+  box-sizing: border-box;
+}
+
+.web-projects__form textarea {
+  resize: vertical;
+}
+
+.web-projects__form-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: 8px;
+}
+
+.web-projects__list {
+  display: grid;
+  gap: 14px;
+}
+
+.web-project-card {
+  padding: 18px;
+  border: 1px solid #e9edf4;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(28, 40, 71, 0.035);
+}
+
+.web-project-card__header,
+.web-project-card__summary,
+.web-project-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.web-project-card__client {
+  color: #526dea;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.web-project-card__header h2 {
+  margin: 4px 0 0;
+  color: #1d2940;
+  font-size: 16px;
+}
+
+.web-project-card__header select,
+.web-project-card__tasks li select {
+  min-height: 34px;
+  padding: 0 9px;
+  border: 1px solid #e3e7ef;
+  border-radius: 8px;
+  background: #fff;
+  color: #566176;
+  font: inherit;
+  font-size: 10px;
+}
+
+.web-project-card__description {
+  margin: 12px 0 0;
+  color: #758096;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.web-project-card__summary {
+  margin-top: 15px;
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.web-project-card__progress,
+.project-progress__meter {
+  height: 7px;
+  overflow: hidden;
+  margin-top: 8px;
+  border-radius: 10px;
+  background: #edf0f6;
+}
+
+.web-project-card__progress span,
+.project-progress__meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4a66e8, #50b7e9);
+  transition: width 180ms ease;
+}
+
+.web-project-card__tasks {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #eef0f5;
+}
+
+.web-project-card__tasks ul {
+  display: grid;
+  gap: 7px;
+  margin: 10px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.web-project-card__tasks li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #566176;
+  font-size: 10px;
+}
+
+.web-project-card__tasks li small {
+  color: #9aa2b1;
+}
+
+.web-project-card__empty {
+  margin: 10px 0;
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.web-project-card__add-task,
+.web-project-card__footer button,
+.web-project-card__footer a,
+.web-project-card__task-form > button {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 9px;
+  border: 1px solid #e1e6f4;
+  border-radius: 8px;
+  background: #fff;
+  color: #4c62c6;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.web-project-card__task-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.web-project-card__task-form > input {
+  min-width: 180px;
+  min-height: 33px;
+  flex: 1;
+  padding: 0 9px;
+  border: 1px solid #e1e6ef;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 10px;
+}
+
+.web-project-card__task-form label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #748096;
+  font-size: 9px;
+}
+
+.web-project-card__footer {
+  justify-content: flex-start;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #eef0f5;
+}
+
+.project-progress {
+  min-height: 100vh;
+  background: #f5f7fb;
+  color: #172033;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.project-progress__header {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 max(24px, calc((100% - 900px) / 2));
+  border-bottom: 1px solid #e7eaf1;
+  background: #fff;
+  color: #818b9d;
+  font-size: 11px;
+}
+
+.project-progress__header a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #25314a;
+  text-decoration: none;
+}
+
+.project-progress__header img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.project-progress__content {
+  width: min(100% - 40px, 760px);
+  margin: 0 auto;
+  padding: 26px 0 44px;
+}
+
+.project-progress__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #63708a;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.project-progress__overview,
+.project-progress__tasks,
+.project-progress__state {
+  margin-top: 18px;
+  padding: 24px;
+  border: 1px solid #e8ecf3;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(28, 40, 71, 0.035);
+}
+
+.project-progress__eyebrow {
+  margin: 0 0 8px;
+  color: #526dea;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 1px;
+}
+
+.project-progress__overview h1 {
+  margin: 0;
+  color: #1a263e;
+  font-size: clamp(24px, 5vw, 34px);
+  letter-spacing: -0.8px;
+}
+
+.project-progress__status {
+  display: inline-flex;
+  margin-top: 11px;
+  padding: 6px 9px;
+  border-radius: 7px;
+  background: #edf1ff;
+  color: #4965e3;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.project-progress__overview > p:not(.project-progress__eyebrow) {
+  color: #758096;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.project-progress__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #7d8799;
+  font-size: 10px;
+}
+
+.project-progress__meter {
+  height: 9px;
+  margin-top: 18px;
+}
+
+.project-progress__percent {
+  display: block;
+  margin-top: 8px;
+  color: #5368ce;
+  font-size: 11px;
+}
+
+.project-progress__tasks h2 {
+  margin: 0 0 13px;
+  color: #29354b;
+  font-size: 15px;
+}
+
+.project-progress__tasks > p {
+  color: #8992a2;
+  font-size: 11px;
+}
+
+.project-progress__tasks ol {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-progress__tasks li {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 0;
+  border-top: 1px solid #eef0f5;
+  color: #57647a;
+  font-size: 11px;
+}
+
+.project-progress__tasks li svg {
+  color: #4b67e8;
+}
+
+.project-progress__tasks li small {
+  color: #8c96a7;
+  font-size: 9px;
+}
+
+.project-progress__footer {
+  margin-top: 14px;
+  color: #929bac;
+  font-size: 9px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.project-progress__state {
+  display: grid;
+  min-height: 210px;
+  place-items: center;
+  align-content: center;
+  color: #8791a3;
+  text-align: center;
+}
+
+.project-progress__state h1 {
+  color: #26334b;
+  font-size: 19px;
+}
+
+.project-progress__state p {
+  font-size: 11px;
+}
+
+@media (max-width: 640px) {
+  .web-projects__form {
+    grid-template-columns: 1fr;
+  }
+
+  .web-project-card__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .project-progress__header {
+    padding: 0 18px;
+  }
+
+  .project-progress__overview,
+  .project-progress__tasks {
+    padding: 19px;
+  }
+}

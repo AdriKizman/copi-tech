@@ -1,0 +1,217 @@
+.contracts-page {
+  padding-bottom: 48px;
+}
+
+.contract-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 18px;
+  padding: 20px;
+  border: 1px solid #e8ecf3;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.contract-form h2,
+.contract-form h3,
+.contract-form__notice {
+  grid-column: 1 / -1;
+}
+
+.contract-form h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: #29354b;
+  font-size: 15px;
+}
+
+.contract-form h3 {
+  margin: 5px 0 0;
+  color: #29354b;
+  font-size: 12px;
+}
+
+.contract-form__notice {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff8e9;
+  color: #806735;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.contract-form > label {
+  display: grid;
+  gap: 6px;
+  color: #68748a;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.contract-form input,
+.contract-form select,
+.contract-form textarea {
+  width: 100%;
+  min-height: 38px;
+  padding: 9px 10px;
+  border: 1px solid #e1e6ef;
+  border-radius: 8px;
+  background: #fff;
+  color: #303b52;
+  font: inherit;
+  font-size: 11px;
+  box-sizing: border-box;
+}
+
+.contract-form textarea {
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.contract-form__full {
+  grid-column: 1 / -1;
+}
+
+.contract-form__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.contract-detail {
+  display: grid;
+  gap: 15px;
+}
+
+.contract-detail__actions,
+.contract-detail__summary,
+.contract-payment-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.contract-detail__summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.contract-detail__summary article {
+  padding: 16px;
+  border: 1px solid #e8ecf3;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.contract-detail__summary span {
+  display: block;
+  margin-bottom: 8px;
+  color: #8992a2;
+  font-size: 10px;
+}
+
+.contract-detail__summary strong {
+  color: #26334b;
+  font-size: 16px;
+}
+
+.contract-detail__panel {
+  padding: 18px;
+  border: 1px solid #e8ecf3;
+  border-radius: 13px;
+  background: #fff;
+}
+
+.contract-detail__panel h2 {
+  margin: 0 0 13px;
+  color: #29354b;
+  font-size: 14px;
+}
+
+.contract-detail__payment-list {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.contract-detail__payment-list th,
+.contract-detail__payment-list td {
+  padding: 10px 9px;
+  border-top: 1px solid #eef0f5;
+  color: #59657a;
+  font-size: 10px;
+  text-align: left;
+}
+
+.contract-detail__payment-list th {
+  color: #929bac;
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.contract-detail__payment-list a {
+  color: #4965e3;
+  text-decoration: none;
+}
+
+.contract-payment-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.contract-payment-form label {
+  display: grid;
+  gap: 6px;
+  color: #68748a;
+  font-size: 10px;
+}
+
+.contract-payment-form input,
+.contract-payment-form select {
+  width: 100%;
+  min-height: 37px;
+  padding: 8px 9px;
+  border: 1px solid #e1e6ef;
+  border-radius: 8px;
+  background: #fff;
+  color: #303b52;
+  font: inherit;
+  font-size: 11px;
+  box-sizing: border-box;
+}
+
+.contract-payment-form__conversion {
+  align-self: center;
+  color: #758096;
+  font-size: 10px;
+}
+
+.contract-payment-form__actions {
+  grid-column: 1 / -1;
+}
+
+.contract-detail__muted {
+  color: #8992a2;
+  font-size: 11px;
+}
+
+@media (max-width: 700px) {
+  .contract-form,
+  .contract-payment-form {
+    grid-template-columns: 1fr;
+  }
+
+  .contract-detail__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .contract-payment-form__actions,
+  .contract-form__actions {
+    grid-column: auto;
+  }
+}
