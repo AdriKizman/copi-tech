@@ -445,6 +445,7 @@ export default function Inicio() {
                 <option value="Sistema contable">Sistema contable</option>
                 <option value="Reparación de equipo">Reparación de equipo</option>
                 <option value="Otro">Otro / No estoy seguro</option>
+                <option value="Asesoria de Tesis">Asesoria de Tesis</option>
               </select>
             </label>
             <label>
