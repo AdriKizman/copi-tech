@@ -1,11 +1,12 @@
 // src/app.js
 const express = require('express');
 const cors = require('cors');
-const path = require('path'); // 1. Importar path para manejar rutas de carpetas
+const path = require('path');
 const { asyncHandler, errorHandler } = require('./middlewares/error.middleware');
 const { crearSolicitud } = require('./controllers/contacto.controller');
 
 const app = express();
+const frontendDist = path.join(__dirname, '../frontend-copitech/dist');
 
 app.use(cors());
 app.use(express.json());
@@ -16,6 +17,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'API Mi Negocio funcionando 🚀' });
 });
 
+// --- Rutas ---
 app.use('/api/auth', require('./routes/auth.routes'));
 app.post('/api/contacto', asyncHandler(crearSolicitud));
 app.use('/api/solicitudes', require('./routes/solicitudes.routes'));
@@ -25,15 +27,26 @@ app.use('/api/tasa-cambio', require('./routes/tasaCambio.routes'));
 app.use('/api/clientes', require('./routes/clientes.routes'));
 app.use('/api/ordenes', require('./routes/ordenes.routes'));
 
-// --- Servir archivos estáticos del Frontend ---
-app.use(express.static(path.join(__dirname, '../frontend-copitech')));
+// --- Frontend de producción ---
+app.use(express.static(frontendDist));
+app.use((req, res, next) => {
+  if (
+    req.method !== 'GET' ||
+    req.path === '/api' ||
+    req.path.startsWith('/api/')
+  ) {
+    return next();
+  }
 
-// --- Ruta comodín para el Frontend ---
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend-copitech/index.html'));
+  res.sendFile(path.join(frontendDist, 'index.html'), (error) => {
+    if (error) next(error);
+  });
 });
 
-// --- Manejo de errores (SIEMPRE al final de todo) ---
+// --- 404 ---
+app.use((req, res) => res.status(404).json({ error: 'Ruta no encontrada' }));
+
+// --- Manejo de errores (SIEMPRE al final) ---
 app.use(errorHandler);
 
 module.exports = app;

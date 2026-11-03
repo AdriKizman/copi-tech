@@ -5,6 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm --prefix frontend-copitech install && npm --prefix frontend-copitech run build",
     "start": "node src/server.js",
     "dev": "nodemon src/server.js"
   },
