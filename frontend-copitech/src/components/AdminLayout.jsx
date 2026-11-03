@@ -9,6 +9,7 @@ import {
   CircleDollarSign,
   FolderKanban,
   FileText,
+  ShieldCheck,
 } from 'lucide-react';
 import './AdminLayout.css';
 
@@ -21,7 +22,21 @@ const enlaces = [
   { to: '/recordatorios', label: 'Recordatorios', Icon: BellRing },
   { to: '/informes', label: 'Informes', Icon: BarChart3 },
   { to: '/tasa-cambio', label: 'Tasa BCV', Icon: CircleDollarSign },
+  { to: '/administracion', label: 'Administración', Icon: ShieldCheck, adminOnly: true },
 ];
+
+function rolSesion() {
+  try {
+    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    return usuario.rol;
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      return '';
+    }
+
+    throw error;
+  }
+}
 
 function nombreSesion() {
   try {
@@ -40,6 +55,7 @@ function nombreSesion() {
 
 export default function AdminLayout({ children }) {
   const navigate = useNavigate();
+  const esAdmin = rolSesion() === 'admin';
 
   const cerrarSesion = () => {
     localStorage.removeItem('token');
@@ -58,7 +74,7 @@ export default function AdminLayout({ children }) {
           </NavLink>
 
           <nav className="admin-shell__nav" aria-label="Navegación administrativa">
-            {enlaces.map(({ to, label, Icon }) => (
+            {enlaces.filter(({ adminOnly }) => !adminOnly || esAdmin).map(({ to, label, Icon }) => (
               <NavLink
                 className={({ isActive }) =>
                   `admin-shell__nav-link${isActive ? ' admin-shell__nav-link--active' : ''}`

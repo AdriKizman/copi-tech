@@ -3,36 +3,56 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Usuario = require('../models/usuario.model');
 
+function passwordValido(password) {
+  return typeof password === 'string' &&
+    password.length >= 8 &&
+    Buffer.byteLength(password, 'utf8') <= 72;
+}
+
 /**
  * POST /api/auth/registro
- * Crea un nuevo usuario. Solo el primer usuario puede ser admin libremente;
- * después, para crear admins se requiere estar autenticado como admin.
+ * Crea usuarios como técnicos; los permisos se administran por separado.
  */
 const registro = async (req, res) => {
-  const { nombre, email, password, rol } = req.body;
+  const { nombre, email, password } = req.body;
+  const nombreNormalizado = typeof nombre === 'string' ? nombre.trim() : '';
+  const emailNormalizado = typeof email === 'string' ? email.trim().toLowerCase() : '';
 
-  if (!nombre || !email || !password) {
+  if (!nombreNormalizado || !emailNormalizado || typeof password !== 'string') {
     return res.status(400).json({ error: 'nombre, email y password son obligatorios' });
   }
-  if (password.length < 6) {
-    return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres' });
+  if (nombreNormalizado.length > 100) {
+    return res.status(400).json({ error: 'El nombre no puede superar 100 caracteres' });
   }
-
-  const existe = await Usuario.buscarPorEmail(email);
-  if (existe) {
-    return res.status(409).json({ error: 'El email ya está registrado' });
+  if (
+    emailNormalizado.length > 254 ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailNormalizado)
+  ) {
+    return res.status(400).json({ error: 'El correo electrónico no es válido' });
+  }
+  if (password.length < 8 || Buffer.byteLength(password, 'utf8') > 72) {
+    return res.status(400).json({
+      error: 'La contraseña debe tener al menos 8 caracteres y no superar 72 bytes',
+    });
   }
 
   const password_hash = await bcrypt.hash(password, 10);
-
-  const nuevo = await Usuario.crear({
-    nombre,
-    email,
-    password_hash,
-    rol: rol === 'admin' ? 'admin' : 'tecnico',
-  });
-
-  res.status(201).json({ message: 'Usuario creado', usuario: nuevo });
+  try {
+    const nuevo = await Usuario.crear({
+      nombre: nombreNormalizado,
+      email: emailNormalizado,
+      password_hash,
+    });
+    res.status(201).json({ message: 'Usuario creado', usuario: nuevo });
+  } catch (error) {
+    if (error.code === 'REGISTRATION_DISABLED') {
+      return res.status(403).json({ error: error.message });
+    }
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(409).json({ error: 'El email ya está registrado' });
+    }
+    throw error;
+  }
 };
 
 /**
@@ -42,12 +62,12 @@ const registro = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
+  if (typeof email !== 'string' || typeof password !== 'string' || !email.trim() || !password) {
     return res.status(400).json({ error: 'email y password son obligatorios' });
   }
 
-  const usuario = await Usuario.buscarPorEmail(email);
-  if (!usuario || !usuario.activo) {
+  const usuario = await Usuario.buscarPorEmail(email.trim().toLowerCase());
+  if (!usuario || Number(usuario.activo) !== 1) {
     return res.status(401).json({ error: 'Credenciales inválidas' });
   }
 
@@ -57,7 +77,12 @@ const login = async (req, res) => {
   }
 
   const token = jwt.sign(
-    { id: usuario.id, email: usuario.email, rol: usuario.rol },
+    {
+      id: usuario.id,
+      email: usuario.email,
+      rol: usuario.rol,
+      token_version: usuario.token_version ?? 0,
+    },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
   );
@@ -84,4 +109,105 @@ const perfil = async (req, res) => {
   res.json(usuario);
 };
 
-module.exports = { registro, login, perfil };
+const listarUsuarios = async (req, res) => {
+  res.json({ usuarios: await Usuario.listar() });
+};
+
+const obtenerConfiguracionRegistro = async (req, res) => {
+  res.json({ habilitado: await Usuario.registroHabilitado() });
+};
+
+const actualizarConfiguracionRegistro = async (req, res) => {
+  if (typeof req.body.habilitado !== 'boolean') {
+    return res.status(400).json({ error: 'habilitado debe ser verdadero o falso' });
+  }
+  const habilitado = await Usuario.actualizarRegistroHabilitado(req.body.habilitado);
+  res.json({ habilitado });
+};
+
+const actualizarRol = async (req, res) => {
+  const id = Number(req.params.id);
+  const { rol } = req.body;
+  if (!Number.isSafeInteger(id) || id < 1) {
+    return res.status(400).json({ error: 'El usuario indicado no es válido' });
+  }
+  if (!['admin', 'tecnico'].includes(rol)) {
+    return res.status(400).json({ error: 'El rol debe ser admin o tecnico' });
+  }
+
+  const resultado = await Usuario.actualizarRol(id, rol, req.usuario.id);
+  if (resultado.resultado === 'no-encontrado') {
+    return res.status(404).json({ error: 'Usuario no encontrado' });
+  }
+  if (resultado.resultado === 'propia-cuenta') {
+    return res.status(409).json({ error: 'No puedes cambiar el rol de tu propia cuenta' });
+  }
+  if (resultado.resultado === 'ultimo-administrador') {
+    return res.status(409).json({ error: 'Debe mantenerse al menos un administrador activo' });
+  }
+  res.json({ usuario: resultado.usuario });
+};
+
+const actualizarActivo = async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isSafeInteger(id) || id < 1) {
+    return res.status(400).json({ error: 'El usuario indicado no es válido' });
+  }
+  if (typeof req.body.activo !== 'boolean') {
+    return res.status(400).json({ error: 'activo debe ser verdadero o falso' });
+  }
+
+  const resultado = await Usuario.actualizarActivo(id, req.body.activo, req.usuario.id);
+  if (resultado.resultado === 'no-encontrado') {
+    return res.status(404).json({ error: 'Usuario no encontrado' });
+  }
+  if (resultado.resultado === 'propia-cuenta') {
+    return res.status(409).json({ error: 'No puedes cambiar el estado de tu propia cuenta' });
+  }
+  if (resultado.resultado === 'ultimo-administrador') {
+    return res.status(409).json({ error: 'Debe mantenerse al menos un administrador activo' });
+  }
+  res.json({ usuario: resultado.usuario });
+};
+
+const actualizarPassword = async (req, res) => {
+  const id = Number(req.params.id);
+  const { passwordActual, passwordNueva } = req.body;
+  if (!Number.isSafeInteger(id) || id < 1) {
+    return res.status(400).json({ error: 'El usuario indicado no es válido' });
+  }
+  if (typeof passwordActual !== 'string' || !passwordActual) {
+    return res.status(400).json({ error: 'Debes confirmar tu contraseña actual' });
+  }
+  if (!passwordValido(passwordNueva)) {
+    return res.status(400).json({
+      error: 'La nueva contraseña debe tener al menos 8 caracteres y no superar 72 bytes',
+    });
+  }
+
+  const credenciales = await Usuario.buscarPassword(req.usuario.id);
+  if (!credenciales || !(await bcrypt.compare(passwordActual, credenciales.password_hash))) {
+    return res.status(403).json({ error: 'La contraseña actual no es correcta' });
+  }
+  const hash = await bcrypt.hash(passwordNueva, 10);
+  const actualizado = await Usuario.actualizarPassword(id, hash);
+  if (!actualizado) {
+    return res.status(404).json({ error: 'Usuario no encontrado o inactivo' });
+  }
+  res.json({
+    message: 'Contraseña actualizada. Las sesiones anteriores de esa cuenta se cerraron.',
+    requiereNuevoLogin: String(id) === String(req.usuario.id),
+  });
+};
+
+module.exports = {
+  registro,
+  login,
+  perfil,
+  listarUsuarios,
+  obtenerConfiguracionRegistro,
+  actualizarConfiguracionRegistro,
+  actualizarRol,
+  actualizarActivo,
+  actualizarPassword,
+};

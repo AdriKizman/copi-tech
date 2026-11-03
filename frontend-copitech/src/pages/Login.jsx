@@ -24,6 +24,8 @@ export default function Login() {
   const location = useLocation();
   const avisoSesion = location.state?.reason === 'session-expired'
     ? 'Tu sesión anterior venció. Inicia sesión con tus credenciales; después podrás abrir de nuevo el contrato guardado.'
+    : location.state?.reason === 'password-changed'
+      ? 'Tu contraseña fue cambiada. Inicia sesión nuevamente con la nueva contraseña.'
     : '';
 
   const handleLogin = async (e) => {

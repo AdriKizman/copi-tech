@@ -1,0 +1,460 @@
+.admin-users__count {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 11px;
+  border-radius: 9px;
+  background: #edf1ff;
+  color: #4a66e8;
+  font-size: 10px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.admin-users__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.admin-users__settings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.admin-users__setting-copy {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.admin-users__icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 11px;
+  background: #edf1ff;
+  color: #4a66e8;
+}
+
+.admin-users__setting-copy h2 {
+  margin: 0;
+  color: #303b52;
+  font-size: 12px;
+}
+
+.admin-users__setting-copy p {
+  margin: 4px 0 0;
+  color: #8791a3;
+  font-size: 10px;
+}
+
+.admin-users__toggle {
+  position: relative;
+  display: inline-flex;
+  width: 42px;
+  height: 24px;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.admin-users__toggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.admin-users__toggle > span {
+  width: 100%;
+  border-radius: 99px;
+  background: #cbd2df;
+  transition: background 150ms ease;
+}
+
+.admin-users__toggle > span::after {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(27, 39, 67, 0.2);
+  content: "";
+  transition: transform 150ms ease;
+}
+
+.admin-users__toggle input:checked + span {
+  background: #4967ed;
+}
+
+.admin-users__toggle input:checked + span::after {
+  transform: translateX(18px);
+}
+
+.admin-users__toggle input:focus-visible + span {
+  outline: 3px solid rgba(73, 103, 237, 0.22);
+  outline-offset: 2px;
+}
+
+.admin-users__toggle input:disabled + span {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.admin-users__panel {
+  overflow: hidden;
+}
+
+.admin-users__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 14px;
+  border-bottom: 1px solid #eef0f5;
+}
+
+.admin-users__toolbar .admin-page__search {
+  max-width: 460px;
+}
+
+.admin-users__message {
+  margin: 0 0 15px;
+  padding: 11px 13px;
+  border-radius: 9px;
+  background: #eef8f2;
+  color: #28774e;
+  font-size: 11px;
+}
+
+.admin-users__message--error {
+  background: #fff5f4;
+  color: #a63e39;
+}
+
+.admin-users__create-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  align-items: end;
+  gap: 12px;
+  padding: 15px;
+  border-bottom: 1px solid #eef0f5;
+  background: #fafbfe;
+}
+
+.admin-users__create-heading {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 7px;
+  color: #4a66e8;
+}
+
+.admin-users__create-heading strong {
+  color: #303b52;
+  font-size: 12px;
+}
+
+.admin-users__create-heading span {
+  color: #8791a3;
+  font-size: 10px;
+}
+
+.admin-users__create-form > label,
+.admin-users__password-form > label {
+  display: grid;
+  gap: 6px;
+  color: #68748a;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.admin-users__create-form input,
+.admin-users__password-form input {
+  width: 100%;
+  height: 37px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  border: 1px solid #e2e7f0;
+  border-radius: 8px;
+  outline: none;
+  background: #fff;
+  color: #303b52;
+  font: inherit;
+  font-size: 11px;
+}
+
+.admin-users__create-form input:focus,
+.admin-users__password-form input:focus {
+  border-color: #899aef;
+  box-shadow: 0 0 0 3px rgba(73, 103, 237, 0.08);
+}
+
+.admin-users__create-form > button {
+  white-space: nowrap;
+}
+
+.admin-users__list {
+  display: grid;
+}
+
+.admin-users__user {
+  display: grid;
+  grid-template-columns: 36px minmax(130px, 1fr) auto auto auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  border-bottom: 1px solid #f0f2f6;
+}
+
+.admin-users__avatar {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  place-items: center;
+  border-radius: 10px;
+  background: #edf1ff;
+  color: #4965e3;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.admin-users__identity {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.admin-users__identity > strong,
+.admin-users__identity > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-users__identity > strong {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #303b52;
+  font-size: 11px;
+}
+
+.admin-users__identity > strong small {
+  padding: 3px 5px;
+  border-radius: 5px;
+  background: #f0f2f7;
+  color: #778198;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.admin-users__identity > span {
+  color: #8791a3;
+  font-size: 10px;
+}
+
+.admin-users__status {
+  padding: 4px 7px;
+  border-radius: 6px;
+  background: #e9f8f0;
+  color: #27885f;
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.admin-users__status--inactive {
+  background: #fff1ef;
+  color: #b94a43;
+}
+
+.admin-users__role {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.admin-users__role select {
+  min-width: 124px;
+  height: 32px;
+  appearance: none;
+  padding: 0 28px 0 9px;
+  border: 1px solid #e2e7f0;
+  border-radius: 8px;
+  outline: 0;
+  background: #fff;
+  color: #59647a;
+  font: inherit;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.admin-users__role select:focus {
+  border-color: #899aef;
+  box-shadow: 0 0 0 3px rgba(73, 103, 237, 0.1);
+}
+
+.admin-users__role select:disabled {
+  background: #f5f6f9;
+  cursor: not-allowed;
+}
+
+.admin-users__role > svg {
+  position: absolute;
+  right: 8px;
+  color: #8791a3;
+  pointer-events: none;
+}
+
+.admin-users__action {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 8px;
+  border: 1px solid #e3e7ef;
+  border-radius: 8px;
+  background: #fff;
+  color: #657185;
+  font: inherit;
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.admin-users__action:hover:not(:disabled) {
+  border-color: #cbd5ff;
+  background: #f5f7ff;
+  color: #435fdf;
+}
+
+.admin-users__action:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.admin-users__action--password {
+  border-color: #dfe5fb;
+  color: #4965df;
+}
+
+.admin-users__password-form {
+  display: grid;
+  grid-column: 2 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  align-items: end;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid #e9edf4;
+  border-radius: 10px;
+  background: #fafbfe;
+}
+
+.admin-users__password-form > p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #778198;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.admin-users__password-form > button {
+  white-space: nowrap;
+}
+
+.admin-users__empty {
+  margin: 0;
+  padding: 22px 15px;
+  color: #8791a3;
+  font-size: 11px;
+}
+
+.admin-users__security-note {
+  margin: 13px 2px 0;
+  color: #8992a3;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .admin-users__user {
+    grid-template-columns: 36px minmax(110px, 1fr) auto auto;
+  }
+
+  .admin-users__action--password {
+    grid-column: 3 / 5;
+  }
+
+  .admin-users__password-form {
+    grid-column: 2 / -1;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-users__settings {
+    padding: 13px;
+  }
+
+  .admin-users__toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-users__toolbar .admin-page__search {
+    max-width: none;
+  }
+
+  .admin-users__create-form,
+  .admin-users__password-form {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-users__user {
+    grid-template-columns: 35px minmax(0, 1fr) auto;
+    gap: 9px;
+    padding: 12px;
+  }
+
+  .admin-users__status {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .admin-users__role {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .admin-users__action {
+    grid-row: 3;
+  }
+
+  .admin-users__action:not(.admin-users__action--password) {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .admin-users__action--password {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  .admin-users__password-form {
+    grid-column: 1 / -1;
+  }
+}

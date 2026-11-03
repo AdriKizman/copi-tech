@@ -90,15 +90,13 @@ function telefonoWhatsApp(telefono) {
   return digitos.startsWith("0") ? `58${digitos.slice(1)}` : digitos;
 }
 
-function obtenerNombreUsuario() {
+function obtenerUsuarioSesion() {
   try {
     const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
-    return typeof usuario.nombre === "string" && usuario.nombre.trim()
-      ? usuario.nombre.trim()
-      : "equipo";
+    return usuario && typeof usuario === "object" ? usuario : {};
   } catch (error) {
     if (error instanceof SyntaxError) {
-      return "equipo";
+      return {};
     }
 
     throw error;
@@ -122,7 +120,11 @@ export default function Dashboard() {
   const [ordenActualizando, setOrdenActualizando] = useState(null);
   const [solicitudAceptando, setSolicitudAceptando] = useState(null);
   const navigate = useNavigate();
-  const nombreUsuario = obtenerNombreUsuario();
+  const usuarioActual = obtenerUsuarioSesion();
+  const nombreUsuario =
+    typeof usuarioActual.nombre === "string" && usuarioActual.nombre.trim()
+      ? usuarioActual.nombre.trim()
+      : "equipo";
 
   useEffect(() => {
     const token = localStorage.getItem("token");

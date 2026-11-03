@@ -18,6 +18,7 @@ import Contratos from './pages/Contratos';
 import ContratoDetalle from './pages/ContratoDetalle';
 import DocumentoContrato from './pages/DocumentoContrato';
 import ComprobanteRecepcion from './pages/ComprobanteRecepcion';
+import Administracion from './pages/Administracion';
 import TasaCambioProvider from './contexts/TasaCambioProvider';
 
 function RutaAdministrativa({ children }) {
@@ -25,6 +26,19 @@ function RutaAdministrativa({ children }) {
   return localStorage.getItem('token')
     ? children
     : <Navigate to="/admin" replace state={{ from: location, reason: 'login-required' }} />;
+}
+
+function RutaSoloAdmin({ children }) {
+  let esAdmin = false;
+  try {
+    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    esAdmin = usuario.rol === 'admin';
+  } catch (error) {
+    if (!(error instanceof SyntaxError)) {
+      throw error;
+    }
+  }
+  return esAdmin ? children : <Navigate to="/dashboard" replace />;
 }
 
 function App() {
@@ -53,6 +67,10 @@ function App() {
           <Route path="/contratos" element={paginaAdmin(<Contratos />)} />
           <Route path="/ordenes/:id/comprobante-recepcion" element={paginaDocumento(<ComprobanteRecepcion />)} />
           <Route path="/dashboard" element={paginaAdmin(<Dashboard />)} />
+          <Route
+            path="/administracion"
+            element={paginaAdmin(<RutaSoloAdmin><Administracion /></RutaSoloAdmin>)}
+          />
           <Route path="/ordenes" element={paginaAdmin(<Ordenes />)} />
           <Route path="/ordenes/:id" element={paginaAdmin(<OrdenDetalle />)} />
           <Route path="/clientes" element={paginaAdmin(<Clientes />)} />
