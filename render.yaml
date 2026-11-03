@@ -2,5 +2,6 @@ services:
   - type: web
     name: copi-tech
     runtime: node
+    rootDir: .
     buildCommand: npm ci && npm run build
     startCommand: npm start

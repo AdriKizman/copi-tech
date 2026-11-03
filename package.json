@@ -5,7 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm --prefix frontend-copitech install --include=dev && npm --prefix frontend-copitech run build",
+    "build": "npm --prefix frontend-copitech install --include=dev && npm --prefix frontend-copitech run build && node -e \"require('fs').accessSync('frontend-copitech/dist/index.html')\"",
     "start": "node src/server.js",
     "dev": "nodemon src/server.js"
   },
