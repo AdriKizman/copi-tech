@@ -1,7 +1,6 @@
 services:
   - type: web
     name: copi-tech
-    runtime: node
-    rootDir: .
-    buildCommand: npm ci && npm run build
-    startCommand: npm start
+    env: node
+    buildCommand: npm install && cd frontend-copitech && npm install && npm run build && cd ..
+    startCommand: node ./src/server.js
