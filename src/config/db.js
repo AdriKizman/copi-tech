@@ -2,7 +2,7 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-// Pool de conexiones con valores por defecto de respaldo
+// Pool de conexiones con valores por defecto de respaldo y SSL requerido para TiDB Cloud
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
@@ -13,6 +13,9 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
   timezone: '-04:00',
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 // Verificación rápida al arrancar
